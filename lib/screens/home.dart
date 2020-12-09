@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 import '../components/ffi.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -22,6 +23,24 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   bool _status;
+  Timer _timer;
+
+  //Initialize timer to call ffiTest every 15 seconds
+  @override
+  void initState() {
+    _timer = Timer.periodic(Duration(seconds: 15), (Timer t) {
+      setState(() {
+        _status = ffiTest();
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -33,9 +52,11 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
 
       //Shows boolean status of ffiTest function on each press
-      _status = ffiTest();
+      //_status = ffiTest();
     });
   }
+
+
 
   @override
   Widget build(BuildContext context) {
