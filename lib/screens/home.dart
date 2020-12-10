@@ -21,8 +21,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  bool _status;
+  int _counter = 1;
+  bool _status = ffiTest();
   Timer _timer;
 
   //Initialize timer to call ffiTest every 15 seconds
@@ -31,6 +31,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _timer = Timer.periodic(Duration(seconds: 15), (Timer t) {
       setState(() {
         _status = ffiTest();
+        _counter++;
       });
     });
     super.initState();
@@ -50,9 +51,6 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
-
-      //Shows boolean status of ffiTest function on each press
-      //_status = ffiTest();
     });
   }
 
@@ -93,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'You have pushed the button this many times:',
+              'This many intervals have passed:',
             ),
             Text(
               '$_counter',
@@ -105,11 +103,11 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+      //floatingActionButton: FloatingActionButton(
+        //onPressed: _incrementCounter,
+        //tooltip: 'Increment',
+        //child: Icon(Icons.add),
+      ); // This trailing comma makes auto-formatting nicer for build methods.
+    //);
   }
 }
