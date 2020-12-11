@@ -8,7 +8,7 @@ final BehaviorSubject<ReceivedNotification> didReceiveLocalNotificationSubject =
 final BehaviorSubject<String> selectNotificationSubject = BehaviorSubject<String>();
 
 Future<void> initNotifications(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
-  const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('kiwi');
+  const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('placeholder');
 
   final IOSInitializationSettings initializationSettingsIOS = IOSInitializationSettings(
       requestAlertPermission: false,
