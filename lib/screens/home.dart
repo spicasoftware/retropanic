@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:retropanic/components/notificationHelper.dart';
 import 'dart:async';
 import '../components/ffi.dart';
 import '../components/notificationHelper.dart';
@@ -28,6 +27,8 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _newStatus;
   bool _status = ffiTest();
   Timer _timer;
+  var _currTime;
+  var _nextNotification;
 
   //Initialize timer to call ffiTest every 15 seconds
   @override
@@ -36,8 +37,10 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         _newStatus = ffiTest();
         if (_newStatus != _status) {
-          showNotification(flutterLocalNotificationsPlugin);
           _status = _newStatus;
+          _currTime = new DateTime.now();
+          _nextNotification = _currTime.add(new Duration(seconds: 15));
+          scheduleNotification(flutterLocalNotificationsPlugin, '0', '$_status', _nextNotification);
         }
         _counter++;
       });

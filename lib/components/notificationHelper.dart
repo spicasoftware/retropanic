@@ -41,3 +41,14 @@ Future<void> showNotification(FlutterLocalNotificationsPlugin flutterLocalNotifi
   await flutterLocalNotificationsPlugin.show(0, 'Retropanic title', 'plain body', platformChannelSpecifics,
     payload: 'item x');
 }
+
+Future<void> scheduleNotification(
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
+  String id,
+  String body,
+  DateTime scheduledNotificationDateTime) async {
+  var androidPlatformChannelSpecifics = AndroidNotificationDetails(id, 'Retropanic', 'Mercury Status', icon: 'placeholder',);
+  var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+  var platformChannelSpecifics = NotificationDetails(androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+  await flutterLocalNotificationsPlugin.schedule(0, 'Retropanic title', body, scheduledNotificationDateTime, platformChannelSpecifics);
+}
