@@ -4,6 +4,20 @@ import '../components/ffi.dart';
 import '../components/notificationHelper.dart';
 import '../main.dart';
 
+/////////// Hax? Just put the FFI stuff in here for now ?//////////////
+import 'dart:ffi'; // For FFI
+import 'dart:io'; // For Platform.isX
+
+final DynamicLibrary nativeAddLib = Platform.isAndroid
+    ? DynamicLibrary.open("libephemeris.so")
+    : DynamicLibrary.process();
+
+final int Function(int x, int y) nativeAdd =
+nativeAddLib
+    .lookup<NativeFunction<Int32 Function(Int32, Int32)>>("native_add")
+    .asFunction();
+//////////////////////////////////////////////////////////////////////
+
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
@@ -88,6 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text('Added in C++ code: 1 + 2 == ${nativeAdd(1, 2)}'),
             Text(
               'This many intervals have passed:',
             ),
