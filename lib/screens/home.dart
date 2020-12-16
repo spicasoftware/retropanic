@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:workmanager/workmanager.dart';
 import '../components/ffi.dart';
-import '../components/notificationHelper.dart';
-import '../main.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -27,21 +26,21 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _newStatus;
   bool _status = ffiTest();
   Timer _timer;
-  var _currTime;
-  var _nextNotification;
+  int nextCheck = 15;
 
   //Initialize timer to call ffiTest every 15 seconds
   @override
   void initState() {
     _timer = Timer.periodic(Duration(seconds: 15), (Timer t) {
       setState(() {
-        _newStatus = ffiTest();
+/*        _newStatus = ffiTest();
         if (_newStatus != _status) {
-          _status = _newStatus;
-          _currTime = new DateTime.now();
-          _nextNotification = _currTime.add(new Duration(seconds: 15));
-          scheduleNotification(flutterLocalNotificationsPlugin, '0', '$_status', _nextNotification);
-        }
+          _status = _newStatus;*/
+          Workmanager.registerOneOffTask("1", "Test task", inputData: <String, dynamic>{
+            'bool': _status,
+            },
+          );
+//        }
         _counter++;
       });
     });
