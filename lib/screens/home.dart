@@ -24,26 +24,25 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 1;
   bool _newStatus;
-  bool _status = ffiTest();
+  bool _status = true; //ffiTest();
   Timer _timer;
   int nextCheck = 15;
 
   //Initialize timer to call ffiTest every 15 seconds
   @override
   void initState() {
-    _timer = Timer.periodic(Duration(seconds: 15), (Timer t) {
+    Workmanager.registerPeriodicTask("0", "Test task");
+   _timer = Timer.periodic(Duration(seconds: 15), (Timer t) {
       setState(() {
-/*        _newStatus = ffiTest();
+        print('state: ');
+        _newStatus = ffiTest();
+
         if (_newStatus != _status) {
-          _status = _newStatus;*/
-          Workmanager.registerOneOffTask("1", "Test task", inputData: <String, dynamic>{
-            'bool': _status,
-            },
-          );
-//        }
+          _status = _newStatus;
+       }
         _counter++;
       });
-    });
+   });
     super.initState();
   }
 

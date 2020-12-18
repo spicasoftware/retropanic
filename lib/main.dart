@@ -13,16 +13,10 @@ void callbackDispatcher() {
   Workmanager.executeTask((taskName, inputData) async {
 
     var _currTime = new DateTime.now();
-    var _nextNotification = _currTime.add(new Duration(seconds: 15));
+    print(_currTime);
+    var _status = ffiTest();
 
-    scheduleNotification(flutterLocalNotificationsPlugin, '0', '$inputData', _nextNotification);
-
-    Workmanager.registerOneOffTask(
-      "2", "Test task 2", inputData: <String, dynamic>{
-      'bool': ffiTest(),
-    },
-      initialDelay: Duration(seconds: 15),
-    );
+    scheduleNotification(flutterLocalNotificationsPlugin, '0', '$inputData', _currTime);
 
     return Future.value(true);
   });
@@ -34,7 +28,7 @@ Future<void> main() async {
   notificationAppLaunchDetails = await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
   await initNotifications(flutterLocalNotificationsPlugin);
 
-  Workmanager.initialize(callbackDispatcher, isInDebugMode: true);
+  Workmanager.initialize(callbackDispatcher);
 
   runApp(MyApp());
 }
