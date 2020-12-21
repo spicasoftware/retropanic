@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:retropanic/components/ffi.dart';
 import 'package:retropanic/components/notificationHelper.dart';
 import 'package:workmanager/workmanager.dart';
 import './app.dart';
-import './components/ffi.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 NotificationAppLaunchDetails notificationAppLaunchDetails;
@@ -14,9 +14,14 @@ void callbackDispatcher() {
 
     var _currTime = new DateTime.now();
     print(_currTime);
-    var _status = ffiTest();
+    var _nextValue = !ffiCurrentStatus();
+    print(_nextValue);
+    var _nextChange = ffiNextChange();
+    print(_nextChange);
 
-    scheduleNotification(flutterLocalNotificationsPlugin, '0', '$inputData', _currTime);
+    if(_nextChange.isBefore(_currTime.add(new Duration(minutes: 15)))) {
+      scheduleNotification(flutterLocalNotificationsPlugin, '0', '$_nextValue', _nextChange);
+    }
 
     return Future.value(true);
   });

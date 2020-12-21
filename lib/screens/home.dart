@@ -24,7 +24,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 1;
   bool _newStatus;
-  bool _status = true; //ffiTest();
+  bool _status = ffiCurrentStatus();
   Timer _timer;
   int nextCheck = 15;
 
@@ -32,10 +32,11 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     Workmanager.registerPeriodicTask("0", "Test task");
+
    _timer = Timer.periodic(Duration(seconds: 15), (Timer t) {
       setState(() {
         print('state: ');
-        _newStatus = ffiTest();
+        _newStatus = ffiCurrentStatus();
 
         if (_newStatus != _status) {
           _status = _newStatus;
