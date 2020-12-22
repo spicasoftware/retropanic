@@ -1,6 +1,6 @@
 import 'dart:math';
 
-bool ffiTest() {
+bool ffiCurrentStatus() {
 
   //Generate random number between 1 and 10
   var rng = new Random();
@@ -17,4 +17,9 @@ bool ffiTest() {
   } else {
     return false;
   }
+}
+
+DateTime ffiNextChange() {
+  var _currTime = new DateTime.now();
+  return _currTime.add(new Duration(minutes: 14));
 }
