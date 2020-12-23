@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:retropanic/components/ffi.dart';
+import 'package:retropanic/main.dart';
 import 'package:rxdart/subjects.dart';
 import '../models/notifications.dart';
 
@@ -33,7 +35,6 @@ Future<void> initNotifications(FlutterLocalNotificationsPlugin flutterLocalNotif
 }
 
 Future<void> showNotification(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
-  print('In showNotification');
   var androidPlatformChannelSpecifics = AndroidNotificationDetails('0', 'Retropanic', 'Mercury Status',
     importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
   var iOSPlatformChannelSpecifics = IOSNotificationDetails();
@@ -51,4 +52,19 @@ Future<void> scheduleNotification(
   var iOSPlatformChannelSpecifics = IOSNotificationDetails();
   var platformChannelSpecifics = NotificationDetails(androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
   await flutterLocalNotificationsPlugin.schedule(0, 'Retropanic title', body, scheduledNotificationDateTime, platformChannelSpecifics);
+}
+
+Future<void> showOngoingNotification(status, nextChange) async {
+  const androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      '0', 'Retropanic', 'Mercury Status',
+      importance: Importance.Max,
+      priority: Priority.High,
+      ongoing: true,
+      autoCancel: false,
+      showWhen: true,
+      playSound: true);
+
+  const platformChannelSpecifics = NotificationDetails(androidPlatformChannelSpecifics, null);
+
+  await flutterLocalNotificationsPlugin.show(0, 'Mercury currently: $status', 'Next change: $nextChange', platformChannelSpecifics);
 }
