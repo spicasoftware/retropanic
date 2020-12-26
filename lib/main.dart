@@ -12,29 +12,18 @@ NotificationAppLaunchDetails notificationAppLaunchDetails;
 void callbackDispatcher() {
   Workmanager.executeTask((taskName, inputData) async {
 
-    var status;
-    var nextChange;
+    var _status;
+    var _nextChange;
 
     while(true) {
       print("Registering notification");
-      status = ffiCurrentStatus();
-      nextChange = ffiNextChange();
-      showOngoingNotification(status, nextChange);
+      _status = ffiCurrentStatus();
+      _nextChange = ffiNextChange();
+      showOngoingNotification(_status, _nextChange);
       await Future.delayed(const Duration(minutes: 1), () {});
     }
 
-/*    var _currTime = new DateTime.now();
-    print(_currTime);
-    var _nextValue = !ffiCurrentStatus();
-    print(_nextValue);
-    var _nextChange = ffiNextChange();
-    print(_nextChange);
-
-    if(_nextChange.isBefore(_currTime.add(new Duration(minutes: 15)))) {
-      scheduleNotification(flutterLocalNotificationsPlugin, '0', '$_nextValue', _nextChange);
-    }*/
-
-    return Future.value(true);
+    //return Future.value(true);
   });
 }
 

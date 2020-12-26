@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:workmanager/workmanager.dart';
 import '../components/ffi.dart';
-import '../components/notificationHelper.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -33,13 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
 
-    //showOngoingNotification();
-
     Workmanager.registerOneOffTask("0", "Retropanic ongoing notification");
-
-/*    for(var x = 0; x < 15; x++) {
-      Workmanager.registerPeriodicTask("$x", "Test task $x", initialDelay: Duration(minutes: x));
-    }*/
 
    _timer = Timer.periodic(Duration(seconds: 15), (Timer t) {
       setState(() {

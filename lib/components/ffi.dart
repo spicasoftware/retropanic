@@ -21,5 +21,5 @@ bool ffiCurrentStatus() {
 
 DateTime ffiNextChange() {
   var _currTime = new DateTime.now();
-  return _currTime.add(new Duration(minutes: 14));
+  return _currTime.add(new Duration(minutes: 1));
 }

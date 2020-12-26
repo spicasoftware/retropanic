@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:retropanic/components/ffi.dart';
 import 'package:retropanic/main.dart';
 import 'package:rxdart/subjects.dart';
 import '../models/notifications.dart';
@@ -57,12 +56,12 @@ Future<void> scheduleNotification(
 Future<void> showOngoingNotification(status, nextChange) async {
   const androidPlatformChannelSpecifics = AndroidNotificationDetails(
       '0', 'Retropanic', 'Mercury Status',
-      importance: Importance.Max,
-      priority: Priority.High,
+      importance: Importance.Low,
+      priority: Priority.Max,
       ongoing: true,
       autoCancel: false,
-      showWhen: true,
-      playSound: true);
+      showWhen: false,
+      playSound: false);
 
   const platformChannelSpecifics = NotificationDetails(androidPlatformChannelSpecifics, null);
 
