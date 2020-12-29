@@ -54,6 +54,8 @@ Future<void> scheduleNotification(
 }
 
 Future<void> showOngoingNotification(status, nextChange) async {
+  const iconColor = Color(0xFFF46F01);
+
   const androidPlatformChannelSpecifics = AndroidNotificationDetails(
       '0', 'Retropanic', 'Mercury Status',
       importance: Importance.Low,
@@ -61,7 +63,9 @@ Future<void> showOngoingNotification(status, nextChange) async {
       ongoing: true,
       autoCancel: false,
       showWhen: false,
-      playSound: false);
+      playSound: false,
+      color: iconColor,
+  );
 
   const platformChannelSpecifics = NotificationDetails(androidPlatformChannelSpecifics, null);
 
