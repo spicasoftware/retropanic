@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:workmanager/workmanager.dart';
 import '../components/ffi.dart';
 
+
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
@@ -31,7 +32,8 @@ class _MyHomePageState extends State<MyHomePage> {
   //Initialize timer to call ffiTest every 15 seconds
   @override
   void initState() {
-    Workmanager.registerPeriodicTask("0", "Test task");
+
+    Workmanager.registerOneOffTask("0", "Retropanic ongoing notification");
 
    _timer = Timer.periodic(Duration(seconds: 15), (Timer t) {
       setState(() {
