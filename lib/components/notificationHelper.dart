@@ -33,26 +33,6 @@ Future<void> initNotifications(FlutterLocalNotificationsPlugin flutterLocalNotif
       });
 }
 
-Future<void> showNotification(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
-  var androidPlatformChannelSpecifics = AndroidNotificationDetails('0', 'Retropanic', 'Mercury Status',
-    importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
-  var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-  var platformChannelSpecifics = NotificationDetails(androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-  await flutterLocalNotificationsPlugin.show(0, 'Retropanic title', 'plain body', platformChannelSpecifics,
-    payload: 'item x');
-}
-
-Future<void> scheduleNotification(
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
-  String id,
-  String body,
-  DateTime scheduledNotificationDateTime) async {
-  var androidPlatformChannelSpecifics = AndroidNotificationDetails(id, 'Retropanic', 'Mercury Status', icon: 'placeholder',);
-  var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-  var platformChannelSpecifics = NotificationDetails(androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-  await flutterLocalNotificationsPlugin.schedule(0, 'Retropanic title', body, scheduledNotificationDateTime, platformChannelSpecifics);
-}
-
 Future<void> showOngoingNotification(status, nextChange) async {
   const iconColor = Color(0xFFF46F01);
 
