@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:workmanager/workmanager.dart';
-import '../components/ffi.dart';
+import 'package:retropanic/components/uiHelper.dart';
+import 'package:retropanic/components/ffi.dart';
 
 
 class MyHomePage extends StatefulWidget {
@@ -23,11 +24,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 1;
   bool _newStatus;
-  bool _status = ffiCurrentStatus();
+  static bool _status = ffiCurrentStatus();
   Timer _timer;
   int nextCheck = 15;
+  String _uIText = mainUIText(_status);
+  Color _textColor = mainUITextColor(_status);
+  Color _backgroundColor = mainUIBackgroundColor(_status);
 
   //Initialize timer to call ffiTest every 15 seconds
   @override
@@ -43,7 +46,11 @@ class _MyHomePageState extends State<MyHomePage> {
         if (_newStatus != _status) {
           _status = _newStatus;
        }
-        _counter++;
+        
+        _uIText = mainUIText(_status);
+        _textColor = mainUITextColor(_status);
+        _backgroundColor = mainUIBackgroundColor(_status);
+
       });
    });
     super.initState();
@@ -58,17 +65,18 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
+    // by the _incrementCounter method uIText = 'Chill, man...'above.
     //
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
+/*      appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
-      ),
+      ),*/
+      backgroundColor: _backgroundColor,
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
@@ -89,24 +97,21 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'This many intervals have passed:',
+
+            Center(
+              child: Text(
+                '$_uIText',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: _textColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 100,
+                ),
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-            Text(
-              '$_status'
-            )
           ],
         ),
       ),
-      //floatingActionButton: FloatingActionButton(
-        //onPressed: _incrementCounter,
-        //tooltip: 'Increment',
-        //child: Icon(Icons.add),
-      ); // This trailing comma makes auto-formatting nicer for build methods.
-    //);
+    );
   }
 }
