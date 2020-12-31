@@ -37,6 +37,14 @@ android {
         disable 'InvalidPackage'
     }
 
+    defaultConfig {
+        externalNativeBuild {
+            cmake {
+                arguments "-DANDROID_DISABLE_FORMAT_STRING_CHECKS=TRUE"
+            }
+        }
+    }
+
     externalNativeBuild {
         // Encapsulates your CMake build configurations.
         cmake {

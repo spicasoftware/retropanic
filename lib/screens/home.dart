@@ -16,6 +16,11 @@ final int Function(int x, int y) nativeAdd =
 nativeAddLib
     .lookup<NativeFunction<Int32 Function(Int32, Int32)>>("native_add")
     .asFunction();
+
+final void Function() init =
+nativeAddLib
+    .lookup<NativeFunction<Void Function()>>("init")
+    .asFunction();
 //////////////////////////////////////////////////////////////////////
 
 class MyHomePage extends StatefulWidget {
@@ -47,6 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
   //Initialize timer to call ffiTest every 15 seconds
   @override
   void initState() {
+    init();
     _timer = Timer.periodic(Duration(seconds: 15), (Timer t) {
       setState(() {
         _newStatus = ffiTest();

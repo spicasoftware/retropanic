@@ -1,7 +1,9 @@
-
-
-
 cmake_minimum_required(VERSION 3.4.1)  # for example
+
+set(ANDROID_DISABLE_FORMAT_STRING_CHECKS 1)
+
+file(GLOB SOURCES "../ios/Classes/swisseph/src/*.c")
+file(GLOB HEADERS "../ios/Classes/swisseph/src/*.h")
 
 add_library( ephemeris
 
@@ -9,4 +11,4 @@ add_library( ephemeris
              SHARED
 
              # Provides a relative path to your source file(s).
-             ../ios/Classes/ephemeris.cpp )
+             ${HEADERS} ${SOURCES} ../ios/Classes/ephemeris.c)
