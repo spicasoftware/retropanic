@@ -3,24 +3,25 @@ import 'dart:async';
 import '../components/ffi.dart';
 import '../components/notificationHelper.dart';
 import '../main.dart';
+import 'package:ephemeris/ephemeris.dart';
 
 /////////// Hax? Just put the FFI stuff in here for now ?//////////////
-import 'dart:ffi'; // For FFI
-import 'dart:io'; // For Platform.isX
-
-final DynamicLibrary nativeAddLib = Platform.isAndroid
-    ? DynamicLibrary.open("libephemeris.so")
-    : DynamicLibrary.process();
-
-final int Function(int x, int y) nativeAdd =
-nativeAddLib
-    .lookup<NativeFunction<Int32 Function(Int32, Int32)>>("native_add")
-    .asFunction();
-
-final void Function() init =
-nativeAddLib
-    .lookup<NativeFunction<Void Function()>>("init")
-    .asFunction();
+// import 'dart:ffi'; // For FFI
+// import 'dart:io'; // For Platform.isX
+//
+// final DynamicLibrary nativeAddLib = Platform.isAndroid
+//     ? DynamicLibrary.open("libephemeris.so")
+//     : DynamicLibrary.process();
+//
+// final int Function(int x, int y) nativeAdd =
+// nativeAddLib
+//     .lookup<NativeFunction<Int32 Function(Int32, Int32)>>("native_add")
+//     .asFunction();
+//
+// final void Function() init =
+// nativeAddLib
+//     .lookup<NativeFunction<Void Function()>>("init")
+//     .asFunction();
 //////////////////////////////////////////////////////////////////////
 
 class MyHomePage extends StatefulWidget {
@@ -76,6 +77,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final now = new DateTime.now();
+
+    final pi = getPlanetInfo(SE_MERCURY, now.year, now.month, now.day, now.hour + now.minute/60);
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -108,7 +112,8 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('Added in C++ code: 1 + 2 == ${nativeAdd(1, 2)}'),
+            Text('Mercury position: ${pi.position.longitude}, ${pi.position.latitude}, ${pi.position.distance}'),
+            Text('Mercury speed: ${pi.speed.longitude}, ${pi.speed.latitude}, ${pi.speed.distance}'),
             Text(
               'This many intervals have passed:',
             ),

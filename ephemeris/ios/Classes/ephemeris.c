@@ -1,30 +1,31 @@
 #include <stdint.h>
 #include "swisseph/src/swephexp.h"
 
-int g_init_offset = 0;
-
-/*extern "C"*/ __attribute__((visibility("default"))) __attribute__((used))
-int32_t native_add(int32_t x, int32_t y) {
-    return x + y + g_init_offset;
-}
+__attribute__((visibility("default"))) __attribute__((used))
+int MERCURY = SE_MERCURY;
 
 __attribute__((visibility("default"))) __attribute__((used))
 void init() {
     swe_set_ephe_path(NULL);
-    g_init_offset = 1337;
 }
 
 __attribute__((visibility("default"))) __attribute__((used))
-double julianDay(int year, int month, int day, double hour) {
+double getJulianDay(int year, int month, int day, double hour) {
     double tjd_ut = swe_julday(year, month, day, hour, SE_GREG_CAL);
     return tjd_ut; // + swe_deltat(tjd_ut); not necessary, we're using swe_calc_ut
 }
 
+// Dart FFI can't nest structs. This is why we can't have nice things.
 typedef struct {
-    double longitude;
-    double latitude;
-    double distance;
-} skyPoint;
+    double position_longitude;
+    double position_latitude;
+    double position_distance;
+    double speed_longitude;
+    double speed_latitude;
+    double speed_distance;
+    long returnFlag;
+    char *errorString;
+} planetResult_t;
 
 /**
  * WARNING: THIS! IS! NOT! THREAD! SAFE!
@@ -32,36 +33,41 @@ typedef struct {
  * code you copy your results out of the planetResult struct before calling planetInfo
  * again. This *should* be handled in the Dart wrapper, but this comment is your last
  * warning just in case that gets routed around somehow.
+ *
+ * The way this ultimately *should* work is to replicate the way
+ * https://github.com/dart-lang/samples/blob/master/ffi/structs/structs.dart
+ * handles allocations and deletions, but doing it this way cuts a bunch of time off
+ * getting a functional RetroPanic MVP out the door.
  */
-typedef struct {
-    skyPoint position;
-    skyPoint speed;
-    char serr[AS_MAXCH];
-} planetResult_t;
-
+char serr[AS_MAXCH];
 planetResult_t planetResult;
 
 __attribute__((visibility("default"))) __attribute__((used))
-planetResult_t* planetInfo(int planet, double julianDay) {
+planetResult_t* planetInfo(int planet, int year, int month, int day, double hour) {
     double planetParams[6];
-    long iflag = SEFLG_SPEED;
-    long iflgret = swe_calc_ut(julianDay, planet, iflag, planetParams, planetResult.serr);
 
-     /* if there is a problem, a negative value is returned and an
-     * error message is in serr.
-     */
+    double julianDay = getJulianDay(year, month, day, hour);
 
-    if (iflgret < 0)
-         printf("error: %s\n", planetResult.serr);
+    planetResult.returnFlag = swe_calc_ut(julianDay, planet, SEFLG_SPEED
+
+
+
+        , planetParams, serr);
+    planetResult.errorString = serr;
+
+    // if there is a problem, a negative value is returned and an error message is in serr.
+    if (planetResult.returnFlag < 0) {
+        printf("swisseph error: %s\n", serr);
+    }
 
     // array of 6 doubles for longitude, latitude, distance, speed in long., speed in lat., and speed in dist.
     int sigh = 0;
-    planetResult.position.longitude = planetParams[sigh];
-    planetResult.position.latitude = planetParams[sigh++];
-    planetResult.position.distance = planetParams[sigh++];
-    planetResult.speed.longitude = planetParams[sigh++];
-    planetResult.speed.latitude = planetParams[sigh++];
-    planetResult.speed.distance = planetParams[sigh++];
+    planetResult.position_longitude = planetParams[sigh++];
+    planetResult.position_latitude = planetParams[sigh++];
+    planetResult.position_distance = planetParams[sigh++];
+    planetResult.speed_longitude = planetParams[sigh++];
+    planetResult.speed_latitude = planetParams[sigh++];
+    planetResult.speed_distance = planetParams[sigh++];
 
     return &planetResult;
 }
