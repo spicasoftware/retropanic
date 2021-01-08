@@ -14,19 +14,19 @@ ephemerisLib
 
 class PlanetInfoFFI extends Struct {
   @Double()
-  double position_longitude;
+  double position_rightAsc;
 
   @Double()
-  double position_latitude;
+  double position_dec;
 
   @Double()
   double position_distance;
 
   @Double()
-  double speed_longitude;
+  double speed_rightAsc;
 
   @Double()
-  double speed_latitude;
+  double speed_dec;
 
   @Double()
   double speed_distance;
@@ -38,8 +38,8 @@ class PlanetInfoFFI extends Struct {
 }
 
 class SkyPoint {
-  double longitude;
-  double latitude;
+  double rightAsc;
+  double dec;
   double distance;
 }
 
@@ -71,11 +71,11 @@ PlanetInfo getPlanetInfo(int planet, int year, int month, int day, double hour) 
   PlanetInfo ret = new PlanetInfo();
   ret.position = new SkyPoint();
   ret.speed = new SkyPoint();
-  ret.position.longitude = pi.position_longitude;
-  ret.position.latitude = pi.position_latitude;
+  ret.position.rightAsc = pi.position_rightAsc;
+  ret.position.dec = pi.position_dec;
   ret.position.distance = pi.position_distance;
-  ret.speed.longitude = pi.speed_longitude;
-  ret.speed.latitude = pi.speed_latitude;
+  ret.speed.rightAsc = pi.speed_rightAsc;
+  ret.speed.dec = pi.speed_dec;
   ret.speed.distance = pi.speed_distance;
   ret.returnCode = pi.returnFlag;
   //TODO ret.errorString = pi.serr;

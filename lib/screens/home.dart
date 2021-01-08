@@ -112,8 +112,9 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('Mercury position: ${pi.position.longitude}, ${pi.position.latitude}, ${pi.position.distance}'),
-            Text('Mercury speed: ${pi.speed.longitude}, ${pi.speed.latitude}, ${pi.speed.distance}'),
+            Text('Mercury position: ${pi.position.rightAsc}, ${pi.position.dec}, ${pi.position.distance}'),
+            Text('Mercury speed: ${pi.speed.rightAsc}, ${pi.speed.dec}, ${pi.speed.distance}'),
+            Text('PANIC?????: ${pi.speed.rightAsc < 0 ? 'YES PANIC' : 'NO DON\'T PANIC'}'),
             Text(
               'This many intervals have passed:',
             ),

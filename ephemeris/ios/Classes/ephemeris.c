@@ -17,11 +17,11 @@ double getJulianDay(int year, int month, int day, double hour) {
 
 // Dart FFI can't nest structs. This is why we can't have nice things.
 typedef struct {
-    double position_longitude;
-    double position_latitude;
+    double position_rightAsc;
+    double position_dec;
     double position_distance;
-    double speed_longitude;
-    double speed_latitude;
+    double speed_rightAsc;
+    double speed_dec;
     double speed_distance;
     long returnFlag;
     char *errorString;
@@ -48,11 +48,7 @@ planetResult_t* planetInfo(int planet, int year, int month, int day, double hour
 
     double julianDay = getJulianDay(year, month, day, hour);
 
-    planetResult.returnFlag = swe_calc_ut(julianDay, planet, SEFLG_SPEED
-
-
-
-        , planetParams, serr);
+    planetResult.returnFlag = swe_calc_ut(julianDay, planet, SEFLG_SPEED | SEFLG_EQUATORIAL, planetParams, serr);
     planetResult.errorString = serr;
 
     // if there is a problem, a negative value is returned and an error message is in serr.
@@ -62,11 +58,11 @@ planetResult_t* planetInfo(int planet, int year, int month, int day, double hour
 
     // array of 6 doubles for longitude, latitude, distance, speed in long., speed in lat., and speed in dist.
     int sigh = 0;
-    planetResult.position_longitude = planetParams[sigh++];
-    planetResult.position_latitude = planetParams[sigh++];
+    planetResult.position_rightAsc = planetParams[sigh++];
+    planetResult.position_dec = planetParams[sigh++];
     planetResult.position_distance = planetParams[sigh++];
-    planetResult.speed_longitude = planetParams[sigh++];
-    planetResult.speed_latitude = planetParams[sigh++];
+    planetResult.speed_rightAsc = planetParams[sigh++];
+    planetResult.speed_dec = planetParams[sigh++];
     planetResult.speed_distance = planetParams[sigh++];
 
     return &planetResult;
