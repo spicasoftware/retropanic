@@ -26,7 +26,7 @@ class _MainUIState extends State<MainUI> {
   //Initialize timer to call ffiTest every 15 seconds
   @override
   void initState() {
-
+    ffiInit();
     Workmanager.registerOneOffTask("0", "Retropanic ongoing notification");
 
     _timer = Timer.periodic(Duration(seconds: 15), (Timer t) {
@@ -36,7 +36,6 @@ class _MainUIState extends State<MainUI> {
 
         if (_newStatus != _status) {
           _status = _newStatus;
-        }
 
         _uIText = mainUIText(_status);
         _textColor = mainUITextColor(_status);
