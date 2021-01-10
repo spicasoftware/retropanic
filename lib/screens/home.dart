@@ -37,9 +37,10 @@ class _MainUIState extends State<MainUI> {
         if (_newStatus != _status) {
           _status = _newStatus;
 
-        _uIText = mainUIText(_status);
-        _textColor = mainUITextColor(_status);
-        _backgroundColor = mainUIBackgroundColor(_status);
+          _uIText = mainUIText(_status);
+          _textColor = mainUITextColor(_status);
+          _backgroundColor = mainUIBackgroundColor(_status);
+        }
 
       });
     });

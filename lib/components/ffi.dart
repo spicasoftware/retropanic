@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:ephemeris/ephemeris.dart';
+import 'package:retropanic/ephemeris/ephemeris.dart';
 
 void ffiInit() {
   init();
