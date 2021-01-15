@@ -1,6 +1,7 @@
 import 'dart:ffi'; // For FFI
 import 'dart:io'; // For Platform.isX
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/services.dart';
 
 final DynamicLibrary ephemerisLib = Platform.isAndroid
@@ -80,6 +81,30 @@ PlanetInfo getPlanetInfo(int planet, int year, int month, int day, double hour) 
   ret.returnCode = pi.returnFlag;
   //TODO ret.errorString = pi.serr;
 
+  return ret;
+}
+
+DateTime findSituation(DateTime start, DateTime end, bool found(DateTime when, double stepHours), {double initialStepHours=24, double resolution=1/60}) {
+  DateTime hour2Date(double hour) {
+    return DateTime.fromMillisecondsSinceEpoch((hour*1000*60*60).round(), isUtc: true);
+  }
+
+  double findIt(double lo, double hi, bool found(DateTime when, double stepHours), double step) {
+    for (var i = lo; i < hi; i += step) {
+      if(found(hour2Date(i), step)) {
+        if(step > resolution) {
+          final subFound = findIt(i-step, i+step, found, step/2);
+          if(subFound != null) return subFound;
+        }
+        else return i;
+      }
+    }
+
+    return null;
+  }
+
+  final ret = hour2Date(findIt(start.millisecondsSinceEpoch/1000/60/60, end.millisecondsSinceEpoch/1000/60/60, found, initialStepHours));
+  print('final: ${ret}');
   return ret;
 }
 

@@ -26,7 +26,7 @@ void callbackDispatcher() {
     while(true) {
       print("Registering notification");
       _status = ffiCurrentStatus();
-      _nextChange = ffiNextChange();
+      _nextChange = ffiNextMercuryChange();
       showOngoingNotification(_status, _nextChange);
       await Future.delayed(const Duration(minutes: 1), () {});
     }
