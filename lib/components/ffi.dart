@@ -17,7 +17,14 @@ bool ffiCurrentStatus() {
   return pi.speed.longitude < 0;
 }
 
-DateTime ffiNextChange() {
-  var _currTime = new DateTime.now();
-  return _currTime.add(new Duration(minutes: 1));
+DateTime ffiNextMercuryChange() {
+  var _currTime = new DateTime.now().toUtc();
+  return findSituation(_currTime, _currTime.add(new Duration(days: 365)), (DateTime when, double stepHours) {
+    final epsilon = stepHours/50;
+    final info = getPlanetInfo(SE_MERCURY, when.year, when.month, when.day, when.hour + when.minute / 60);
+
+    print('fs ${info.speed.longitude} / $epsilon');
+
+    return info.speed.longitude.abs() < epsilon;
+  }).toLocal();
 }

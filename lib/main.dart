@@ -27,9 +27,6 @@ void callbackDispatcher() {
     if (_difference >= const Duration(seconds: 30)) {
       await Future.delayed(_difference, () {});
       showScheduledNotification(_status, _nextChange);
-      await Future.delayed(const Duration(minutes: 1), () {});
-      showOngoingNotification(_status, _nextChange);
-    }
 
     return Future.value(true);
   });
