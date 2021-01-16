@@ -16,22 +16,22 @@ Future<void> _cancelAllNotifications() async {
 void callbackDispatcher() {
   Workmanager.executeTask((taskName, inputData) async {
 
-    var _status;
-    var _nextChange;
+    var _status = ffiCurrentStatus();
+    var _nextChange = ffiNextChange();
+    var _currTime = new DateTime.now();
+    var _difference = _nextChange.difference(_currTime);
 
-    //Cancel any previous scheduled notifications
-    _cancelAllNotifications();
+    print("TASK: $taskName");
 
-    //Generate a notification every minute
-    while(true) {
-      print("Registering notification");
-      _status = ffiCurrentStatus();
-      _nextChange = ffiNextChange();
-      showOngoingNotification(_status, _nextChange);
+    showOngoingNotification(_status, _nextChange);
+    if (_difference >= const Duration(seconds: 30)) {
+      await Future.delayed(_difference, () {});
+      showScheduledNotification(_status, _nextChange);
       await Future.delayed(const Duration(minutes: 1), () {});
+      showOngoingNotification(_status, _nextChange);
     }
 
-    //return Future.value(true);
+    return Future.value(true);
   });
 }
 
@@ -42,6 +42,9 @@ Future<void> main() async {
   await initNotifications(flutterLocalNotificationsPlugin);
 
   Workmanager.initialize(callbackDispatcher);
+
+  //Cancel any existing notifications
+  _cancelAllNotifications();
 
   //Cancel any existing tasks
   await Workmanager.cancelAll();

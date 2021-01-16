@@ -33,6 +33,24 @@ Future<void> initNotifications(FlutterLocalNotificationsPlugin flutterLocalNotif
       });
 }
 
+Future<void> showScheduledNotification(status, nextChange) async {
+  const iconColor = Color(0xFFF46F01);
+
+  const androidPlatformChannelSpecifics = AndroidNotificationDetails(
+    '1', 'Retropanic', 'Mercury Status',
+    importance: Importance.Max,
+    priority: Priority.Max,
+    showWhen: false,
+    playSound: true,
+    color: iconColor,
+    ticker: 'ticker',
+  );
+
+  const platformChannelSpecifics = NotificationDetails(androidPlatformChannelSpecifics, null);
+
+  await flutterLocalNotificationsPlugin.show(0, 'Mercury status: $status', 'Next change: $nextChange', platformChannelSpecifics);
+}
+
 Future<void> showOngoingNotification(status, nextChange) async {
   const iconColor = Color(0xFFF46F01);
 
