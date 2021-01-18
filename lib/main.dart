@@ -15,18 +15,16 @@ Future<void> _cancelAllNotifications() async {
 
 void callbackDispatcher() {
   Workmanager.executeTask((taskName, inputData) async {
-
     var _status = ffiCurrentStatus();
-    var _nextChange = ffiNextChange();
+    var _nextChange = ffiNextMercuryChange();
     var _currTime = new DateTime.now();
     var _difference = _nextChange.difference(_currTime);
 
-    print("TASK: $taskName");
-
     showOngoingNotification(_status, _nextChange);
-    if (_difference >= const Duration(seconds: 30)) {
+    if (_difference.inHours <= 12) {
       await Future.delayed(_difference, () {});
-      showScheduledNotification(_status, _nextChange);
+      showScheduledNotification(_status);
+    }
 
     return Future.value(true);
   });
