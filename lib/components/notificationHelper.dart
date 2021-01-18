@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:retropanic/components/timeHelper.dart';
 import 'package:retropanic/main.dart';
+import 'package:retropanic/models/notifications.dart';
 import 'package:rxdart/subjects.dart';
-import '../models/notifications.dart';
 
 final BehaviorSubject<ReceivedNotification> didReceiveLocalNotificationSubject = BehaviorSubject<ReceivedNotification>();
 
 final BehaviorSubject<String> selectNotificationSubject = BehaviorSubject<String>();
 
 Future<void> initNotifications(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
-  const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('placeholder');
+  const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('rp_not_icon');
 
   final IOSInitializationSettings initializationSettingsIOS = IOSInitializationSettings(
       requestAlertPermission: false,
@@ -33,6 +34,24 @@ Future<void> initNotifications(FlutterLocalNotificationsPlugin flutterLocalNotif
       });
 }
 
+Future<void> showScheduledNotification(status) async {
+  const iconColor = Color(0xFFF46F01);
+
+  const androidPlatformChannelSpecifics = AndroidNotificationDetails(
+    '1', 'Retropanic', 'Mercury Status',
+    importance: Importance.Max,
+    priority: Priority.Max,
+    showWhen: false,
+    playSound: true,
+    color: iconColor,
+    ticker: 'ticker',
+  );
+
+  const platformChannelSpecifics = NotificationDetails(androidPlatformChannelSpecifics, null);
+
+  await flutterLocalNotificationsPlugin.show(0, 'Mercury is $status.', null , platformChannelSpecifics);
+}
+
 Future<void> showOngoingNotification(status, nextChange) async {
   const iconColor = Color(0xFFF46F01);
 
@@ -49,5 +68,12 @@ Future<void> showOngoingNotification(status, nextChange) async {
 
   const platformChannelSpecifics = NotificationDetails(androidPlatformChannelSpecifics, null);
 
-  await flutterLocalNotificationsPlugin.show(0, 'Mercury currently: $status', 'Next change: $nextChange', platformChannelSpecifics);
+  var statusString = mercuryStatus(status);
+  var days = dayDifference(nextChange);
+
+  if (status) {
+    await flutterLocalNotificationsPlugin.show(0, 'Mercury is $statusString.', 'Mercury retrograde ends in $days days.', platformChannelSpecifics);
+  } else {
+    await flutterLocalNotificationsPlugin.show(0, 'Mercury is $statusString.', 'Mercury retrograde begins in $days days.', platformChannelSpecifics);
+  }
 }
