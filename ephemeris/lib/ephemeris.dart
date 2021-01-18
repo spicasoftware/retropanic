@@ -84,6 +84,9 @@ PlanetInfo getPlanetInfo(int planet, int year, int month, int day, double hour) 
   return ret;
 }
 
+// this is basically a bastardized radix search, hacked around the idea that we can only know if our requested aspect is "close enough" at a given time.
+// Efficiency is heavily dependent on the "magic numbers" chosen (initialStepHours, resolution, and whatever calculation the `found` function does to
+// convert a steps size into an epsilon value internally. Fiddle with them if issues occur.
 DateTime findSituation(DateTime start, DateTime end, bool found(DateTime when, double stepHours), {double initialStepHours=24, double resolution=1/60}) {
   DateTime hour2Date(double hour) {
     return DateTime.fromMillisecondsSinceEpoch((hour*1000*60*60).round(), isUtc: true);
