@@ -23,7 +23,7 @@ void callbackDispatcher() {
     showOngoingNotification(_status, _nextChange);
     if (_difference.inHours <= 12) {
       await Future.delayed(_difference, () {});
-      showScheduledNotification(_status);
+      showScheduledNotification(!_status);
     }
 
     return Future.value(true);
