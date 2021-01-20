@@ -22,6 +22,7 @@ class _MainUIState extends State<MainUI> {
   String _uIText = mainUIText(_status);
   Color _textColor = mainUITextColor(_status);
   Color _backgroundColor = mainUIBackgroundColor(_status);
+  String _uiIcon = mainUIIcon(_status);
 
   //Initialize timer to call ffiTest every 15 seconds
   @override
@@ -31,8 +32,8 @@ class _MainUIState extends State<MainUI> {
 
     _timer = Timer.periodic(Duration(seconds: 15), (Timer t) {
       setState(() {
-        print('state: ');
         _newStatus = ffiCurrentStatus();
+        _uiIcon = mainUIIcon(_status);
 
         if (_newStatus != _status) {
           _status = _newStatus;
@@ -61,6 +62,9 @@ class _MainUIState extends State<MainUI> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Center(
+              child: Image(image: AssetImage(_uiIcon))
+            ),
             Center(
               child: Text(
                 '$_uIText',
