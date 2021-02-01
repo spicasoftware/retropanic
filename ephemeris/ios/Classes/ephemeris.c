@@ -2,7 +2,140 @@
 #include "swisseph/src/swephexp.h"
 
 __attribute__((visibility("default"))) __attribute__((used))
+int ECL_NUT = SE_ECL_NUT;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int SUN = SE_SUN;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int MOON = SE_MOON;
+
+__attribute__((visibility("default"))) __attribute__((used))
 int MERCURY = SE_MERCURY;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int VENUS = SE_VENUS;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int MARS = SE_MARS;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int JUPITER = SE_JUPITER;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int SATURN = SE_SATURN;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int URANUS = SE_URANUS;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int NEPTUNE = SE_NEPTUNE;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int PLUTO = SE_PLUTO;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int MEAN_NODE = SE_MEAN_NODE;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int TRUE_NODE = SE_TRUE_NODE;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int MEAN_APOG = SE_MEAN_APOG;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int OSCU_APOG = SE_OSCU_APOG;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int EARTH = SE_EARTH;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int CHIRON = SE_CHIRON;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int PHOLUS = SE_PHOLUS;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int CERES = SE_CERES;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int PALLAS = SE_PALLAS;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int JUNO = SE_JUNO;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int VESTA = SE_VESTA;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int INTP_APOG = SE_INTP_APOG;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int INTP_PERG = SE_INTP_PERG;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int NPLANETS = SE_NPLANETS;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int FICT_OFFSET = SE_FICT_OFFSET;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int NFICT_ELEM = SE_NFICT_ELEM;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int PLMOON_OFFSET = SE_PLMOON_OFFSET;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int AST_OFFSET = SE_AST_OFFSET;
+
+/* Hamburger or Uranian "planets" */
+
+__attribute__((visibility("default"))) __attribute__((used))
+int CUPIDO = SE_CUPIDO;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int HADES = SE_HADES;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int ZEUS = SE_ZEUS;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int KRONOS = SE_KRONOS;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int APOLLON = SE_APOLLON;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int ADMETOS = SE_ADMETOS;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int VULKANUS = SE_VULKANUS;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int POSEIDON = SE_POSEIDON;
+
+/* other fictitious bodies */
+
+__attribute__((visibility("default"))) __attribute__((used))
+int ISIS = SE_ISIS;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int NIBIRU = SE_NIBIRU;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int HARRINGTON = SE_HARRINGTON;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int NEPTUNE_LEVERRIER = SE_NEPTUNE_LEVERRIER;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int NEPTUNE_ADAMS = SE_NEPTUNE_ADAMS;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int PLUTO_LOWELL = SE_PLUTO_LOWELL;
+
+__attribute__((visibility("default"))) __attribute__((used))
+int PLUTO_PICKERING = SE_PLUTO_PICKERING;
 
 __attribute__((visibility("default"))) __attribute__((used))
 void init() {
