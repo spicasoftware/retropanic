@@ -20,11 +20,9 @@ bool ffiCurrentStatus() {
 DateTime ffiNextMercuryChange() {
   var _currTime = new DateTime.now().toUtc();
   return findSituation(_currTime, _currTime.add(new Duration(days: 365)), (DateTime when, double stepHours) {
-    final epsilon = stepHours/50;
-    final info = getPlanetInfo(SE_MERCURY, when.year, when.month, when.day, when.hour + when.minute / 60);
+    final cur = getPlanetInfo(SE_MERCURY, when.year, when.month, when.day, when.hour + when.minute / 60);
+    final future = getPlanetInfo(SE_MERCURY, when.year, when.month, when.day, when.hour + stepHours + (when.minute / 60));
 
-    print('fs ${info.speed.longitude} / $epsilon');
-
-    return info.speed.longitude.abs() < epsilon;
+    return cur.speed.longitude.sign != future.speed.longitude.sign;
   }).toLocal();
 }

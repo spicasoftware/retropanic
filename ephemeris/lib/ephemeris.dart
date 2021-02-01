@@ -142,7 +142,7 @@ DateTime findSituation(DateTime start, DateTime end, bool found(DateTime when, d
     for (var i = lo; i < hi; i += step) {
       if(found(hour2Date(i), step)) {
         if(step > resolution) {
-          final subFound = findIt(i-step, i+step, found, step/2);
+          final subFound = findIt(i, i+step, found, step/2);
           if(subFound != null) return subFound;
         }
         else return i;
