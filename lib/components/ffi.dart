@@ -26,3 +26,22 @@ DateTime ffiNextMercuryChange() {
     return cur.speed.longitude.sign != future.speed.longitude.sign;
   }).toLocal();
 }
+
+double ffiMercuryFullDegree() {
+  final now = new DateTime.now().toUtc();
+  final pi = getPlanetInfo(
+      SE_MERCURY, now.year, now.month, now.day, now.hour + now.minute / 60);
+
+  return pi.position.longitude;
+}
+
+int ffiMercurySignDegree() {
+  return (ffiMercuryFullDegree() % 30).floor();
+}
+
+String ffiMercurySign() {
+  final signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
+  final String currSign = signs[(ffiMercuryFullDegree() / 30).floor()];
+
+  return currSign;
+}

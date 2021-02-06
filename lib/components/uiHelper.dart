@@ -1,25 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:retropanic/components/ffi.dart';
 
-String mainUIText (status) {
-  if (status) {
-    return 'OMG PANIC!';
+bool isDarkMode () {
+  var brightness = SchedulerBinding.instance.window.platformBrightness;
+  return brightness == Brightness.dark;
+}
+
+String mainUIIcon (status, isDarkMode) {
+  if (status && !isDarkMode) {
+    return 'assets/images/rp_retro_light.png';
+  } else if (status && isDarkMode){
+    return 'assets/images/rp_retro_dark.png';
+  } else if (!status && !isDarkMode) {
+    return 'assets/images/rp_direct_light.png';
   } else {
-    return 'Chill, man...';
+    return 'assets/images/rp_direct_dark.png';
   }
 }
 
-Color mainUITextColor (status) {
+String statusText (status) {
   if (status) {
-    return Color(0xFFFFD80C);
+    return 'Mercury is retrograde';
   } else {
-    return Color(0xFFF46F01);
+    return 'Mercury is not retrograde';
   }
 }
 
-Color mainUIBackgroundColor (status) {
+String statusSubText (status) {
   if (status) {
-    return Color(0xFF060606);
+    return 'Ends';
+  } else {
+    return 'Begins';
+  }
+}
+
+Color mainUITextColor (isDarkMode) {
+  print('Next ${ffiNextMercuryChange()}');
+  print('Countdown ${ffiNextMercuryChange().millisecondsSinceEpoch + 1000 * 30}');
+  print('Current ${DateTime.now().millisecondsSinceEpoch + 1000 * 30}');
+  if (!isDarkMode) {
+    return Colors.black;
   } else {
     return Color(0xFFFBF8C6);
+  }
+}
+
+Color mainUIBackgroundColor (isDarkMode) {
+  if (!isDarkMode) {
+    return Color(0xFFFBF8C6);
+  } else {
+    return Colors.black;
   }
 }
