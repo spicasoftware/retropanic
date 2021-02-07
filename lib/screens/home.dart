@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:workmanager/workmanager.dart';
 import 'package:retropanic/components/uiHelper.dart';
 import 'package:retropanic/components/ffi.dart';
@@ -69,58 +70,173 @@ class _MainUIState extends State<MainUI> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Center(
-                  child: Image(image: AssetImage(_uiIcon))
-              ),
-              Center(
-                child: Text(
-                  'Mercury',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: _textColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 60,
-                  )
-                )
-              ),
-              Center(
-                child: Text(
-                  '$_degree\u00B0 $_sign',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: _textColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 50,
-                  ),
+              Expanded(
+                flex: 10,
+                child: Image(
+                  image: AssetImage(_uiIcon)
                 ),
               ),
-              Center(
-                child: Text(
-                  _statusText,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: _textColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 40,
-                  )
-                )
-              ),
-/*              Center(
-                child: CountdownTimer(
-                  endTime: _countdown,
-                  widgetBuilder: (_, CurrentRemainingTime time) {
-                    return Text(
-                      '$_statusSubText: ${time.days} days, ${time.hours} hours, ${time.min} minutes',
+              Expanded(
+                flex: 5,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      'MERCURY',
                       textAlign: TextAlign.center,
-                        style: TextStyle(
+                      style: GoogleFonts.bebasNeue(
+                        textStyle: TextStyle(
+                          color: _textColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 80,
+                        )
+                      )
+                    ),
+                    Text(
+                      _statusText,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.bebasNeue(
+                        textStyle: TextStyle(
                           color: _textColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 40,
                         )
-                    );
-                  }
+                      )
+                    ),
+                    Text(
+                      '$_degree\u00B0 $_sign',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.roboto(
+                        textStyle: TextStyle(
+                          color: _textColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ]
                 )
-              )*/
+              ),
+              Expanded(
+                flex: 4,
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        _statusSubText,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.roboto(
+                          textStyle: TextStyle(
+                            color: _textColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                      CountdownTimer(
+                          endTime: _countdown,
+                          widgetBuilder: (_, CurrentRemainingTime time) {
+                            if (time.days == null && time.hours == null && time.min == null) {
+                              return Text(
+                                  'Less than 1 minute',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.roboto(
+                                    textStyle: TextStyle(
+                                      color: _textColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  )
+                              );
+                            } else if (time.days == null && time.hours == null && time.min != null) {
+                              return Text(
+                                  '${time.min} minutes',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.roboto(
+                                    textStyle: TextStyle(
+                                      color: _textColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  )
+                              );
+                            } else if (time.days == null && time.hours != null && time.min == null) {
+                              return Text(
+                                  '${time.hours} hours',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.roboto(
+                                    textStyle: TextStyle(
+                                      color: _textColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  )
+                              );
+                            } else if (time.days != null && time.hours == null && time.min == null) {
+                              return Text(
+                                  '${time.days} days',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.roboto(
+                                    textStyle: TextStyle(
+                                      color: _textColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  )
+                              );
+                            } else if (time.days != null && time.hours != null && time.min == null) {
+                              return Text(
+                                  '${time.days} days, ${time.hours} hours',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.roboto(
+                                    textStyle: TextStyle(
+                                      color: _textColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  )
+                              );
+                            } else if (time.days != null && time.hours == null && time.min != null) {
+                              return Text(
+                                  '${time.days} days, ${time.min} minutes',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.roboto(
+                                    textStyle: TextStyle(
+                                      color: _textColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  )
+                              );
+                            } else if (time.days == null && time.hours != null && time.min != null) {
+                              return Text(
+                                  '${time.hours} hours, ${time.min} minutes',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.roboto(
+                                    textStyle: TextStyle(
+                                      color: _textColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  )
+                              );
+                            }
+                            return Text(
+                                '${time.days} days, ${time.hours} hours, ${time.min} minutes',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.roboto(
+                                  textStyle: TextStyle(
+                                    color: _textColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                )
+                            );
+                          }
+                      )
+                    ]
+                ),
+              ),
             ],
           ),
         ),
