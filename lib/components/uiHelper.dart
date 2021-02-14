@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:retropanic/components/ffi.dart';
 
 bool isDarkMode () {
   var brightness = SchedulerBinding.instance.window.platformBrightness;
@@ -21,24 +20,21 @@ String mainUIIcon (status, isDarkMode) {
 
 String statusText (status) {
   if (status) {
-    return 'Mercury is retrograde';
+    return 'RETROGRADE';
   } else {
-    return 'Mercury is not retrograde';
+    return 'NOT RETROGRADE';
   }
 }
 
 String statusSubText (status) {
   if (status) {
-    return 'Ends';
+    return 'ENDS';
   } else {
-    return 'Begins';
+    return 'BEGINS';
   }
 }
 
 Color mainUITextColor (isDarkMode) {
-  print('Next ${ffiNextMercuryChange()}');
-  print('Countdown ${ffiNextMercuryChange().millisecondsSinceEpoch + 1000 * 30}');
-  print('Current ${DateTime.now().millisecondsSinceEpoch + 1000 * 30}');
   if (!isDarkMode) {
     return Colors.black;
   } else {
