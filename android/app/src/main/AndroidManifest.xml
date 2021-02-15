@@ -9,6 +9,10 @@
     <application
         android:label="RetroPanic"
         android:icon="@mipmap/ic_launcher">
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/rp_not_icon" />
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
