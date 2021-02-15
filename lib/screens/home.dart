@@ -70,6 +70,7 @@ class _MainUIState extends State<MainUI> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              Spacer(),
               Expanded(
                 flex: 10,
                 child: Image(
