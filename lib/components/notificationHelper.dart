@@ -69,9 +69,23 @@ Future<void> showOngoingNotification(status, nextChange) async {
   var statusString = mercuryStatus(status);
   var days = dayDifference(nextChange);
 
-  if (status) {
-    await flutterLocalNotificationsPlugin.show(0, 'Mercury is $statusString.', 'Mercury retrograde ends in $days days.', platformChannelSpecifics);
+  if (days == 1) {
+    if (status) {
+      await flutterLocalNotificationsPlugin.show(0, 'Mercury is $statusString.', 'Mercury retrograde ends in $days day.', platformChannelSpecifics);
+    } else {
+      await flutterLocalNotificationsPlugin.show(0, 'Mercury is $statusString.', 'Mercury retrograde begins in $days day.', platformChannelSpecifics);
+    }
+  } else if (days == 0) {
+    if (status) {
+      await flutterLocalNotificationsPlugin.show(0, 'Mercury is $statusString.', 'Mercury retrograde ends in less than one day.', platformChannelSpecifics);
+    } else {
+      await flutterLocalNotificationsPlugin.show(0, 'Mercury is $statusString.', 'Mercury retrograde begins in less than one day.', platformChannelSpecifics);
+    }
   } else {
-    await flutterLocalNotificationsPlugin.show(0, 'Mercury is $statusString.', 'Mercury retrograde begins in $days days.', platformChannelSpecifics);
+    if (status) {
+      await flutterLocalNotificationsPlugin.show(0, 'Mercury is $statusString.', 'Mercury retrograde ends in $days days.', platformChannelSpecifics);
+    } else {
+      await flutterLocalNotificationsPlugin.show(0, 'Mercury is $statusString.', 'Mercury retrograde begins in $days days.', platformChannelSpecifics);
+    }
   }
 }

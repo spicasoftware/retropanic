@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -82,7 +83,7 @@ class _MainUIState extends State<MainUI> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text(
+                    AutoSizeText(
                       'MERCURY',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.bebasNeue(
@@ -90,10 +91,11 @@ class _MainUIState extends State<MainUI> {
                           color: _textColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 80,
-                        )
-                      )
+                        ),
+                      ),
+                      maxLines: 1,
                     ),
-                    Text(
+                    AutoSizeText(
                       _statusText,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.bebasNeue(
@@ -102,9 +104,10 @@ class _MainUIState extends State<MainUI> {
                           fontWeight: FontWeight.bold,
                           fontSize: 40,
                         )
-                      )
+                      ),
+                      maxLines: 1,
                     ),
-                    Text(
+                    AutoSizeText(
                       '$_degree\u00B0 $_sign',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.roboto(
@@ -114,6 +117,7 @@ class _MainUIState extends State<MainUI> {
                           fontSize: 20,
                         ),
                       ),
+                      maxLines: 1
                     ),
                   ]
                 )
@@ -123,7 +127,7 @@ class _MainUIState extends State<MainUI> {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text(
+                      AutoSizeText(
                         _statusSubText,
                         textAlign: TextAlign.center,
                         style: GoogleFonts.roboto(
@@ -133,12 +137,13 @@ class _MainUIState extends State<MainUI> {
                             fontSize: 20,
                           ),
                         ),
+                        maxLines: 1,
                       ),
                       CountdownTimer(
                           endTime: _countdown,
                           widgetBuilder: (_, CurrentRemainingTime time) {
                             if (time.days == null && time.hours == null && time.min == null) {
-                              return Text(
+                              return AutoSizeText(
                                   'Less than 1 minute',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.roboto(
@@ -147,10 +152,11 @@ class _MainUIState extends State<MainUI> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20,
                                     ),
-                                  )
+                                  ),
+                                  maxLines: 1,
                               );
                             } else if (time.days == null && time.hours == null && time.min != null) {
-                              return Text(
+                              return AutoSizeText(
                                   '${time.min} minutes',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.roboto(
@@ -159,10 +165,11 @@ class _MainUIState extends State<MainUI> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20,
                                     ),
-                                  )
+                                  ),
+                                  maxLines: 1,
                               );
                             } else if (time.days == null && time.hours != null && time.min == null) {
-                              return Text(
+                              return AutoSizeText(
                                   '${time.hours} hours',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.roboto(
@@ -171,10 +178,11 @@ class _MainUIState extends State<MainUI> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20,
                                     ),
-                                  )
+                                  ),
+                                  maxLines: 1,
                               );
                             } else if (time.days != null && time.hours == null && time.min == null) {
-                              return Text(
+                              return AutoSizeText(
                                   '${time.days} days',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.roboto(
@@ -183,10 +191,11 @@ class _MainUIState extends State<MainUI> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20,
                                     ),
-                                  )
+                                  ),
+                                  maxLines: 1,
                               );
                             } else if (time.days != null && time.hours != null && time.min == null) {
-                              return Text(
+                              return AutoSizeText(
                                   '${time.days} days, ${time.hours} hours',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.roboto(
@@ -195,10 +204,11 @@ class _MainUIState extends State<MainUI> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20,
                                     ),
-                                  )
+                                  ),
+                                  maxLines: 1,
                               );
                             } else if (time.days != null && time.hours == null && time.min != null) {
-                              return Text(
+                              return AutoSizeText(
                                   '${time.days} days, ${time.min} minutes',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.roboto(
@@ -207,10 +217,11 @@ class _MainUIState extends State<MainUI> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20,
                                     ),
-                                  )
+                                  ),
+                                  maxLines: 1
                               );
                             } else if (time.days == null && time.hours != null && time.min != null) {
-                              return Text(
+                              return AutoSizeText(
                                   '${time.hours} hours, ${time.min} minutes',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.roboto(
@@ -219,10 +230,11 @@ class _MainUIState extends State<MainUI> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20,
                                     ),
-                                  )
+                                  ),
+                                  maxLines: 1,
                               );
                             }
-                            return Text(
+                            return AutoSizeText(
                                 '${time.days} days, ${time.hours} hours, ${time.min} minutes',
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.roboto(
@@ -231,7 +243,8 @@ class _MainUIState extends State<MainUI> {
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
                                   ),
-                                )
+                                ),
+                                maxLines: 1,
                             );
                           }
                       )
