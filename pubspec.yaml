@@ -23,6 +23,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  auto_size_text: ^2.1.0
   device_info:
   flutter_countdown_timer: ^3.0.0
   flutter_local_notifications: ^1.4.1
