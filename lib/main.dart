@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:retropanic/components/ffi.dart';
 import 'package:retropanic/components/notificationHelper.dart';
 import 'package:workmanager/workmanager.dart';
@@ -44,5 +45,7 @@ Future<void> main() async {
   //Cancel any existing tasks
   await Workmanager.cancelAll();
 
-  runApp(MyApp());
+  //Lock in Portrait mode
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+    .then((value) => runApp(MyApp()));
 }
