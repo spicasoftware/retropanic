@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:swipe_gesture_recognizer/swipe_gesture_recognizer.dart';
 import 'package:workmanager/workmanager.dart';
 import 'package:retropanic/components/uiHelper.dart';
 import 'package:retropanic/components/ffi.dart';
+import 'package:retropanic/screens/edCard1.dart';
 
 
 class MainUI extends StatefulWidget {
@@ -68,145 +70,165 @@ class _MainUIState extends State<MainUI> {
       return new Scaffold(
         backgroundColor: _backgroundColor,
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Spacer(),
-              Expanded(
-                flex: 24,
-                child: Image(
-                  image: AssetImage(_uiIcon)
-                ),
-              ),
-              Spacer(),
-              Expanded(
-                flex: 8,
-                child: FittedBox(
-                  fit: BoxFit.contain,
-                  child: Text(
-                    'MERCURY',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.bebasNeue(
-                      textStyle: TextStyle(
-                        color: _textColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  )
-                ),
-              ),
-              Expanded(
-                flex: 4,
-                child: FittedBox(
-                  fit: BoxFit.contain,
-                  child: Text(
-                    _statusText,
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.bebasNeue(
-                        textStyle: TextStyle(
-                          color: _textColor,
-                          fontWeight: FontWeight.bold,
-                        )
-                    ),
+          child: SwipeGestureRecognizer(
+            onSwipeUp: () {
+              if(_status) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EdCard1Route())
+                );
+              }
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Spacer(),
+                Expanded(
+                  flex: 24,
+                  child: Image(
+                    image: AssetImage(_uiIcon)
                   ),
                 ),
-              ),
-              Expanded(
-                flex: 2,
-                child:
-                  FittedBox(
+                Spacer(),
+                Expanded(
+                  flex: 8,
+                  child: FittedBox(
                     fit: BoxFit.contain,
                     child: Text(
-                      '$_degree\u00B0 $_sign',
+                      'MERCURY',
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.roboto(
+                      style: GoogleFonts.bebasNeue(
                         textStyle: TextStyle(
                           color: _textColor,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+                    )
+                  ),
+                ),
+                Expanded(
+                  flex: 4,
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text(
+                      _statusText,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.bebasNeue(
+                          textStyle: TextStyle(
+                            color: _textColor,
+                            fontWeight: FontWeight.bold,
+                          )
+                      ),
                     ),
-                  )
-              ),
-              Spacer(
-                flex: 3
-              ),
-              Expanded(
-                flex: 3,
-                child: FittedBox(
-                  fit: BoxFit.contain,
-                  child: CountdownTimer(
-                    endTime: _countdown,
-                    widgetBuilder: (_, CurrentRemainingTime time) {
-                      if (time.days == null && time.hours == null && time.min == null) {
-                        return Text(
-                          '$_statusSubText\nLess than 1 minute',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.roboto(
-                            textStyle: TextStyle(
-                              color: _textColor,
-                              fontWeight: FontWeight.bold,
-                            ),
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child:
+                    FittedBox(
+                      fit: BoxFit.contain,
+                      child: Text(
+                        '$_degree\u00B0 $_sign',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.roboto(
+                          textStyle: TextStyle(
+                            color: _textColor,
+                            fontWeight: FontWeight.bold,
                           ),
-                        );
-                      } else if (time.days == null && time.hours == null && time.min != null) {
-                        return Text(
-                          '$_statusSubText\n${time.min} minutes',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.roboto(
-                            textStyle: TextStyle(
-                              color: _textColor,
-                              fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    )
+                ),
+                Spacer(
+                  flex: 3
+                ),
+                Expanded(
+                  flex: 3,
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: CountdownTimer(
+                      endTime: _countdown,
+                      widgetBuilder: (_, CurrentRemainingTime time) {
+                        if (time.days == null && time.hours == null && time.min == null) {
+                          return Text(
+                            '$_statusSubText\nLess than 1 minute',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.roboto(
+                              textStyle: TextStyle(
+                                color: _textColor,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        );
-                      } else if (time.days == null && time.hours != null && time.min == null) {
-                        return Text(
-                          '$_statusSubText\n${time.hours} hours',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.roboto(
-                            textStyle: TextStyle(
-                              color: _textColor,
-                              fontWeight: FontWeight.bold,
+                          );
+                        } else if (time.days == null && time.hours == null && time.min != null) {
+                          return Text(
+                            '$_statusSubText\n${time.min} minutes',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.roboto(
+                              textStyle: TextStyle(
+                                color: _textColor,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        );
-                      } else if (time.days != null && time.hours == null && time.min == null) {
-                        return Text(
-                          '$_statusSubText\n${time.days} days',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.roboto(
-                            textStyle: TextStyle(
-                              color: _textColor,
-                              fontWeight: FontWeight.bold,
+                          );
+                        } else if (time.days == null && time.hours != null && time.min == null) {
+                          return Text(
+                            '$_statusSubText\n${time.hours} hours',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.roboto(
+                              textStyle: TextStyle(
+                                color: _textColor,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        );
-                      } else if (time.days != null && time.hours != null && time.min == null) {
-                        return Text(
-                          '$_statusSubText\n${time.days} days, ${time.hours} hours',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.roboto(
-                            textStyle: TextStyle(
-                              color: _textColor,
-                              fontWeight: FontWeight.bold,
+                          );
+                        } else if (time.days != null && time.hours == null && time.min == null) {
+                          return Text(
+                            '$_statusSubText\n${time.days} days',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.roboto(
+                              textStyle: TextStyle(
+                                color: _textColor,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        );
-                      } else if (time.days != null && time.hours == null && time.min != null) {
-                        return Text(
-                          '$_statusSubText\n${time.days} days, ${time.min} minutes',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.roboto(
-                            textStyle: TextStyle(
-                              color: _textColor,
-                              fontWeight: FontWeight.bold,
+                          );
+                        } else if (time.days != null && time.hours != null && time.min == null) {
+                          return Text(
+                            '$_statusSubText\n${time.days} days, ${time.hours} hours',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.roboto(
+                              textStyle: TextStyle(
+                                color: _textColor,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        );
-                      } else if (time.days == null && time.hours != null && time.min != null) {
+                          );
+                        } else if (time.days != null && time.hours == null && time.min != null) {
+                          return Text(
+                            '$_statusSubText\n${time.days} days, ${time.min} minutes',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.roboto(
+                              textStyle: TextStyle(
+                                color: _textColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          );
+                        } else if (time.days == null && time.hours != null && time.min != null) {
+                          return Text(
+                            '$_statusSubText\n${time.hours} hours, ${time.min} minutes',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.roboto(
+                              textStyle: TextStyle(
+                                color: _textColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          );
+                        }
                         return Text(
-                          '$_statusSubText\n${time.hours} hours, ${time.min} minutes',
+                          '$_statusSubText\n${time.days} days, ${time.hours} hours, ${time.min} minutes',
                           textAlign: TextAlign.center,
                           style: GoogleFonts.roboto(
                             textStyle: TextStyle(
@@ -216,22 +238,12 @@ class _MainUIState extends State<MainUI> {
                           ),
                         );
                       }
-                      return Text(
-                        '$_statusSubText\n${time.days} days, ${time.hours} hours, ${time.min} minutes',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.roboto(
-                          textStyle: TextStyle(
-                            color: _textColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      );
-                    }
+                    )
                   )
-                )
-              ),
-              Spacer()
-            ]
+                ),
+                Spacer()
+              ]
+            ),
           ),
         ),
       );
