@@ -303,6 +303,7 @@ class _MainUIState extends State<MainUI> {
                     )
                   )
                 ),
+                scrollArrow(_status, _textColor),
                 Spacer()
               ]
             ),
