@@ -49,3 +49,19 @@ Color mainUIBackgroundColor (isDarkMode) {
     return Colors.black;
   }
 }
+
+Widget scrollArrow (status, textColor){
+  if (status){
+    return Expanded(
+      flex: 1,
+      child: FittedBox(
+          fit: BoxFit.contain,
+          child: Icon(
+              Icons.arrow_downward_rounded,
+              color: textColor
+          )
+      ),
+    );
+  }
+  else return Spacer();
+}
