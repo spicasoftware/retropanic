@@ -29,6 +29,7 @@ dependencies:
   google_fonts: ^1.1.2
   rxdart: ^0.23.1
   swipe_gesture_recognizer: ^0.0.2
+  url_launcher: ^6.0.3
   workmanager: ^0.2.0
   timezone:
   ephemeris:

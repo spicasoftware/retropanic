@@ -4,7 +4,10 @@ import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:swipe_gesture_recognizer/swipe_gesture_recognizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:workmanager/workmanager.dart';
+import 'package:retropanic/screens/about.dart';
+import 'package:retropanic/screens/license.dart';
 import 'package:retropanic/components/uiHelper.dart';
 import 'package:retropanic/components/ffi.dart';
 import 'package:retropanic/screens/edCard1.dart';
@@ -68,7 +71,66 @@ class _MainUIState extends State<MainUI> {
     @override
     Widget build(BuildContext context) {
       return new Scaffold(
+        drawer: Theme(
+          data: Theme.of(context).copyWith(
+            canvasColor: _backgroundColor
+          ),
+          child: Drawer(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: <Widget>[
+                DrawerHeader(
+                  child: Text('Retropanic', style: TextStyle(
+                    color: _textColor
+                  )),
+                  decoration: BoxDecoration(
+                    color: _backgroundColor,
+                  )
+                ),
+                ListTile(
+                  title: Text('About', style: TextStyle(
+                    color: _textColor
+                  )),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (BuildContext context) => About()
+                    ));
+                  }
+                ),
+                ListTile(
+                  title: Text('Rate Us!', style: TextStyle(
+                    color: _textColor
+                  )),
+                  onTap: () async {
+                    if (await canLaunch("http://www.google.com")) {
+                      await launch("http://www.google.com");
+                    }
+                  }
+                ),
+                ListTile(
+                  title: Text('License', style: TextStyle(
+                    color: _textColor
+                  )),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (BuildContext context) => License()
+                    ));
+                  }
+                )
+              ]
+            ),
+          ),
+        ),
         backgroundColor: _backgroundColor,
+        appBar: AppBar(
+          title: Text('Retropanic', style: TextStyle(
+            color: _textColor
+          )),
+          iconTheme: IconThemeData(color: _textColor),
+          backgroundColor: _backgroundColor,
+        ),
         body: Center(
           child: SwipeGestureRecognizer(
             onSwipeUp: () {
