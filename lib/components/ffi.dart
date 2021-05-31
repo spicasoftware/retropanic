@@ -6,7 +6,7 @@ void ffiInit() {
 
 bool ffiCurrentStatus() {
   final now = new DateTime.now().toUtc();
-  print('Using time: ${now}');
+
   final pi = getPlanetInfo(
       SE_MERCURY, now.year, now.month, now.day, now.hour + now.minute / 60);
   //final pi = getPlanetInfo(SE_MERCURY, 2021, 1, 30, 7 + 51/60 + 8);  <-- stationing retrograde

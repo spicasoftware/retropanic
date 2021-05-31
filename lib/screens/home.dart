@@ -42,7 +42,7 @@ class _MainUIState extends State<MainUI> {
 
     ffiInit();
     Workmanager.registerPeriodicTask(
-        "1", "Retropanic ongoing notification", frequency: Duration(hours: 12));
+        "1", "Retropanic ongoing notification", frequency: Duration(minutes: 15));
 
     setState(() {
       _timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
