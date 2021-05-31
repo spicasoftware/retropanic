@@ -25,7 +25,8 @@ dependencies:
     sdk: flutter
   device_info:
   flutter_countdown_timer: ^3.0.0
-  flutter_local_notifications: ^1.4.1
+  flutter_local_notifications: ^6.0.0
+  flutter_native_timezone: ^1.0.10
   google_fonts: ^1.1.2
   rxdart: ^0.23.1
   swipe_gesture_recognizer: ^0.0.2

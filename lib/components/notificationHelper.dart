@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:retropanic/components/timeHelper.dart';
 import 'package:retropanic/main.dart';
 import 'package:retropanic/models/notifications.dart';
 import 'package:rxdart/subjects.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest.dart' as tz;
 
 final BehaviorSubject<ReceivedNotification> didReceiveLocalNotificationSubject = BehaviorSubject<ReceivedNotification>();
 
@@ -22,8 +25,8 @@ Future<void> initNotifications(FlutterLocalNotificationsPlugin flutterLocalNotif
             id: id, title: title, body: body, payload: payload));
       });
 
-  final InitializationSettings initializationSettings = InitializationSettings(initializationSettingsAndroid,
-      initializationSettingsIOS);
+  final InitializationSettings initializationSettings = InitializationSettings(android: initializationSettingsAndroid,
+      iOS: initializationSettingsIOS);
 
   await flutterLocalNotificationsPlugin.initialize(initializationSettings,
       onSelectNotification: (String payload) async {
@@ -34,37 +37,61 @@ Future<void> initNotifications(FlutterLocalNotificationsPlugin flutterLocalNotif
       });
 }
 
+/*
 Future<void> showScheduledNotification(status) async {
 
   var statusString = mercuryStatus(status);
 
   const androidPlatformChannelSpecifics = AndroidNotificationDetails(
     '1', 'Retropanic', 'Mercury Status',
-    importance: Importance.Max,
-    priority: Priority.Max,
+    importance: Importance.max,
+    priority: Priority.max,
     showWhen: false,
     playSound: true,
     ticker: 'ticker',
   );
 
-  const platformChannelSpecifics = NotificationDetails(androidPlatformChannelSpecifics, null);
+  const platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
 
   await flutterLocalNotificationsPlugin.show(0, 'Mercury is $statusString.', null , platformChannelSpecifics);
+}
+*/
+
+Future<void> showScheduledNotification(status, difference) async {
+
+  await _configureLocalTimeZone();
+
+  var statusString = mercuryStatus(status);
+
+  const androidPlatformChannelSpecifics = AndroidNotificationDetails(
+    '1', 'Retropanic', 'Mercury Status',
+    importance: Importance.max,
+    priority: Priority.max,
+    showWhen: false,
+    playSound: true,
+    ticker: 'ticker',
+  );
+
+  const platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
+
+  await flutterLocalNotificationsPlugin.zonedSchedule(0, 'Mercury is $statusString.', null , tz.TZDateTime.now(tz.local).add(difference), platformChannelSpecifics, androidAllowWhileIdle: true, uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime);
 }
 
 Future<void> showOngoingNotification(status, nextChange) async {
 
+  print('time: ' + nextChange.toString());
+
   const androidPlatformChannelSpecifics = AndroidNotificationDetails(
       '0', 'Retropanic', 'Mercury Status',
-      importance: Importance.Low,
-      priority: Priority.Max,
+      importance: Importance.low,
+      priority: Priority.max,
       ongoing: true,
       autoCancel: false,
       showWhen: false,
       playSound: false,
   );
 
-  const platformChannelSpecifics = NotificationDetails(androidPlatformChannelSpecifics, null);
+  const platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
 
   var statusString = mercuryStatus(status);
   var days = dayDifference(nextChange);
@@ -88,4 +115,10 @@ Future<void> showOngoingNotification(status, nextChange) async {
       await flutterLocalNotificationsPlugin.show(0, 'Mercury is $statusString.', 'Mercury retrograde begins in $days days.', platformChannelSpecifics);
     }
   }
+}
+
+Future<void> _configureLocalTimeZone() async {
+  tz.initializeTimeZones();
+  final String timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
+  tz.setLocalLocation(tz.getLocation(timeZoneName));
 }

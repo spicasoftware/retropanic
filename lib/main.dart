@@ -20,11 +20,15 @@ void callbackDispatcher() {
     var _nextChange = ffiNextMercuryChange();
     var _currTime = new DateTime.now();
     var _difference = _nextChange.difference(_currTime);
+    var _timer = new Duration(minutes: 15);
+    var _interval = new Duration(minutes: 2);
 
     showOngoingNotification(_status, _nextChange);
-    if (_difference.inHours <= 12) {
-      await Future.delayed(_difference, () {});
-      showScheduledNotification(!_status);
+
+    if (_difference <= _timer) {
+      await showScheduledNotification(!_status, _difference);
+      await Future.delayed(_difference + _interval);
+      showOngoingNotification(_status, _nextChange);
     }
 
     return Future.value(true);
