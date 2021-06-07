@@ -7,7 +7,7 @@ import 'package:workmanager/workmanager.dart';
 void read() async {
   final prefs = await SharedPreferences.getInstance();
   final key = 'rp_notifications';
-  notificationToggle = prefs.getBool(key) ?? false;
+  notificationToggle = prefs.getBool(key) ?? true;
 }
 
 void save(value) async {
