@@ -11,7 +11,7 @@ import './app.dart';
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 NotificationAppLaunchDetails notificationAppLaunchDetails;
 
-bool notificationToggle;
+bool notificationToggle = true;
 
 Future<void> cancelAllNotifications() async {
   await flutterLocalNotificationsPlugin.cancelAll();
