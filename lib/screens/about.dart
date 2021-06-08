@@ -108,15 +108,9 @@ class About extends StatelessWidget{
                 child: Text(
                   "Blue'eyes",
                   style: TextStyle(
-                      color: _textColor,
-                      decoration: TextDecoration.underline
+                      color: _textColor
                   )
                 ),
-                onTap: () async {
-                  if (await canLaunch("https://www.google.com")) {
-                    await launch("https://www.google.com");
-                  }
-                }
               )
             ),
             Spacer(),

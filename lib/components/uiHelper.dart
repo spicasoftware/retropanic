@@ -64,6 +64,7 @@ Widget scrollArrow (status, textColor){
     );
   }
   else return Spacer();
+
 }
 
 String notificationStatus(bool status) {
