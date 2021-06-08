@@ -3,6 +3,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:retropanic/components/ffi.dart';
+import 'package:retropanic/components/localStorage.dart';
 import 'package:retropanic/components/notificationHelper.dart';
 import 'package:workmanager/workmanager.dart';
 import './app.dart';
@@ -10,7 +11,9 @@ import './app.dart';
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 NotificationAppLaunchDetails notificationAppLaunchDetails;
 
-Future<void> _cancelAllNotifications() async {
+bool notificationToggle = true;
+
+Future<void> cancelAllNotifications() async {
   await flutterLocalNotificationsPlugin.cancelAll();
 }
 
@@ -44,7 +47,7 @@ Future<void> main() async {
   Workmanager.initialize(callbackDispatcher);
 
   //Cancel any existing notifications
-  _cancelAllNotifications();
+  cancelAllNotifications();
 
   //Cancel any existing tasks
   await Workmanager.cancelAll();
@@ -52,4 +55,7 @@ Future<void> main() async {
   //Lock in Portrait mode
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
     .then((value) => runApp(MyApp()));
+
+  //Read notification toggle setting
+  read();
 }

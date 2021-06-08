@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:retropanic/main.dart';
 import 'package:swipe_gesture_recognizer/swipe_gesture_recognizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:workmanager/workmanager.dart';
 import 'package:retropanic/screens/about.dart';
 import 'package:retropanic/screens/license.dart';
+import 'package:retropanic/screens/settings.dart';
 import 'package:retropanic/components/uiHelper.dart';
 import 'package:retropanic/components/ffi.dart';
 import 'package:retropanic/screens/edCard1.dart';
@@ -41,8 +43,12 @@ class _MainUIState extends State<MainUI> {
     super.initState();
 
     ffiInit();
-    Workmanager.registerPeriodicTask(
-        "1", "Retropanic ongoing notification", frequency: Duration(minutes: 15));
+
+    if (notificationToggle) {
+      Workmanager.registerPeriodicTask(
+          "1", "Retropanic ongoing notification",
+          frequency: Duration(minutes: 15));
+    }
 
     setState(() {
       _timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
@@ -86,6 +92,17 @@ class _MainUIState extends State<MainUI> {
                   decoration: BoxDecoration(
                     color: _backgroundColor,
                   )
+                ),
+                ListTile(
+                  title: Text('Settings', style: TextStyle(
+                    color: _textColor
+                  )),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (BuildContext context) => Settings()
+                    ));
+                  }
                 ),
                 ListTile(
                   title: Text('About', style: TextStyle(
