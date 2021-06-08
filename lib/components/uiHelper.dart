@@ -65,3 +65,8 @@ Widget scrollArrow (status, textColor){
   }
   else return Spacer();
 }
+
+String notificationStatus(bool status) {
+  if (status) return 'On';
+  else return 'Off';
+}
