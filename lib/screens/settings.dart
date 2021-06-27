@@ -46,7 +46,6 @@ class _SettingsState extends State<Settings>{
               value: notificationToggle,
               onChanged: (value) {
                 setState(() {
-                  print('Value: ' + value.toString());
                   notificationToggle = value;
                   save(value);
                 });

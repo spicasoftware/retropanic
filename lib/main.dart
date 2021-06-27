@@ -26,12 +26,18 @@ void callbackDispatcher() {
     var _timer = new Duration(minutes: 15);
     var _interval = new Duration(minutes: 2);
 
-    showOngoingNotification(_status, _nextChange);
+    await read();
+
+    if (notificationToggle) {
+      showOngoingNotification(_status, _nextChange);
+    }
 
     if (_difference <= _timer) {
       await showScheduledNotification(!_status, _difference);
       await Future.delayed(_difference + _interval);
-      showOngoingNotification(_status, _nextChange);
+      if (notificationToggle) {
+        showOngoingNotification(_status, _nextChange);
+      }
     }
 
     return Future.value(true);
@@ -52,10 +58,10 @@ Future<void> main() async {
   //Cancel any existing tasks
   await Workmanager.cancelAll();
 
+  //Read notification toggle setting
+  await read();
+
   //Lock in Portrait mode
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
     .then((value) => runApp(MyApp()));
-
-  //Read notification toggle setting
-  read();
 }

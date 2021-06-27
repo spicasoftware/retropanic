@@ -37,26 +37,6 @@ Future<void> initNotifications(FlutterLocalNotificationsPlugin flutterLocalNotif
       });
 }
 
-/*
-Future<void> showScheduledNotification(status) async {
-
-  var statusString = mercuryStatus(status);
-
-  const androidPlatformChannelSpecifics = AndroidNotificationDetails(
-    '1', 'Retropanic', 'Mercury Status',
-    importance: Importance.max,
-    priority: Priority.max,
-    showWhen: false,
-    playSound: true,
-    ticker: 'ticker',
-  );
-
-  const platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
-
-  await flutterLocalNotificationsPlugin.show(0, 'Mercury is $statusString.', null , platformChannelSpecifics);
-}
-*/
-
 Future<void> showScheduledNotification(status, difference) async {
 
   await _configureLocalTimeZone();
@@ -121,4 +101,8 @@ Future<void> _configureLocalTimeZone() async {
   tz.initializeTimeZones();
   final String timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
   tz.setLocalLocation(tz.getLocation(timeZoneName));
+}
+
+Future<void> cancelOngoingNotification() async {
+  await flutterLocalNotificationsPlugin.cancel(0);
 }
