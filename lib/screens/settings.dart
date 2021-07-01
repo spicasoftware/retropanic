@@ -38,7 +38,7 @@ class _SettingsState extends State<Settings>{
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Notifications: ' + notificationStatus(notificationToggle), style: TextStyle(
+              'Persistent Notification: ' + notificationStatus(notificationToggle), style: TextStyle(
                 color: _textColor
               )
             ),

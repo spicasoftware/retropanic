@@ -50,7 +50,7 @@ class _MainUIState extends State<MainUI> {
     setState(() {
       _timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
         setState(() {
-          _status = ffiCurrentStatus();
+          _status = true; //ffiCurrentStatus();
           _countdown = ffiNextMercuryChange().millisecondsSinceEpoch + 1000 * 30;
           _isDarkMode = isDarkMode();
           _uiIcon = mainUIIcon(_status, _isDarkMode);
