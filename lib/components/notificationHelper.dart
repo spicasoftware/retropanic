@@ -37,7 +37,47 @@ Future<void> initNotifications(FlutterLocalNotificationsPlugin flutterLocalNotif
       });
 }
 
-Future<void> showScheduledNotification(status, difference) async {
+Future<void> showScheduledNotificationWeek(status, difference) async {
+
+  await _configureLocalTimeZone();
+
+  var statusString = mercuryStatus(status);
+
+  const androidPlatformChannelSpecifics = AndroidNotificationDetails(
+    '1', 'Retropanic', 'Mercury Status',
+    importance: Importance.max,
+    priority: Priority.max,
+    showWhen: false,
+    playSound: true,
+    ticker: 'ticker',
+  );
+
+  const platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
+
+  await flutterLocalNotificationsPlugin.zonedSchedule(0, 'Mercury will be $statusString in one week.', null , tz.TZDateTime.now(tz.local).add(difference), platformChannelSpecifics, androidAllowWhileIdle: true, uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime);
+}
+
+Future<void> showScheduledNotificationDay(status, difference) async {
+
+  await _configureLocalTimeZone();
+
+  var statusString = mercuryStatus(status);
+
+  const androidPlatformChannelSpecifics = AndroidNotificationDetails(
+    '1', 'Retropanic', 'Mercury Status',
+    importance: Importance.max,
+    priority: Priority.max,
+    showWhen: false,
+    playSound: true,
+    ticker: 'ticker',
+  );
+
+  const platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
+
+  await flutterLocalNotificationsPlugin.zonedSchedule(0, 'Mercury will be $statusString in one day.', null , tz.TZDateTime.now(tz.local).add(difference), platformChannelSpecifics, androidAllowWhileIdle: true, uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime);
+}
+
+Future<void> showScheduledNotificationNow(status, difference) async {
 
   await _configureLocalTimeZone();
 

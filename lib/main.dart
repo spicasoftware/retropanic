@@ -22,7 +22,9 @@ void callbackDispatcher() {
     var _status = ffiCurrentStatus();
     var _nextChange = ffiNextMercuryChange();
     var _currTime = new DateTime.now();
-    var _difference = _nextChange.difference(_currTime);
+    var _differenceNow = _nextChange.difference(_currTime);
+    var _differenceDay = _nextChange.difference(_currTime.add(new Duration(days: 1)));
+    var _differenceWeek = _nextChange.difference(_currTime.add(new Duration(days: 7)));
     var _timer = new Duration(minutes: 15);
     var _interval = new Duration(minutes: 2);
 
@@ -32,9 +34,29 @@ void callbackDispatcher() {
       showOngoingNotification(_status, _nextChange);
     }
 
-    if (_difference <= _timer) {
-      await showScheduledNotification(!_status, _difference);
-      await Future.delayed(_difference + _interval);
+    //Pop-up one week ahead
+    if (_differenceWeek <= _timer && !_differenceWeek.isNegative) {
+      await showScheduledNotificationWeek(!_status, _differenceWeek);
+      await Future.delayed(_differenceWeek + _interval);
+      if (notificationToggle) {
+        showOngoingNotification(_status, _nextChange);
+      }
+    }
+
+    //Pop-up one day ahead
+    if (_differenceDay <= _timer && !_differenceDay.isNegative) {
+      await showScheduledNotificationDay(!_status, _differenceDay);
+      await Future.delayed(_differenceDay + _interval);
+      if (notificationToggle) {
+        showOngoingNotification(_status, _nextChange);
+      }
+    }
+
+
+    //Pop-up at time of change
+    if (_differenceNow <= _timer) {
+      await showScheduledNotificationNow(!_status, _differenceNow);
+      await Future.delayed(_differenceNow + _interval);
       if (notificationToggle) {
         showOngoingNotification(_status, _nextChange);
       }
