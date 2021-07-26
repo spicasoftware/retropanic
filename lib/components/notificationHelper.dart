@@ -37,8 +37,9 @@ Future<void> initNotifications(FlutterLocalNotificationsPlugin flutterLocalNotif
       });
 }
 
-/*
-Future<void> showScheduledNotification(status) async {
+Future<void> showScheduledNotificationWeek(status, difference) async {
+
+  await _configureLocalTimeZone();
 
   var statusString = mercuryStatus(status);
 
@@ -53,11 +54,30 @@ Future<void> showScheduledNotification(status) async {
 
   const platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
 
-  await flutterLocalNotificationsPlugin.show(0, 'Mercury is $statusString.', null , platformChannelSpecifics);
+  await flutterLocalNotificationsPlugin.zonedSchedule(0, 'Mercury will be $statusString in one week.', null , tz.TZDateTime.now(tz.local).add(difference), platformChannelSpecifics, androidAllowWhileIdle: true, uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime);
 }
-*/
 
-Future<void> showScheduledNotification(status, difference) async {
+Future<void> showScheduledNotificationDay(status, difference) async {
+
+  await _configureLocalTimeZone();
+
+  var statusString = mercuryStatus(status);
+
+  const androidPlatformChannelSpecifics = AndroidNotificationDetails(
+    '1', 'Retropanic', 'Mercury Status',
+    importance: Importance.max,
+    priority: Priority.max,
+    showWhen: false,
+    playSound: true,
+    ticker: 'ticker',
+  );
+
+  const platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
+
+  await flutterLocalNotificationsPlugin.zonedSchedule(0, 'Mercury will be $statusString in one day.', null , tz.TZDateTime.now(tz.local).add(difference), platformChannelSpecifics, androidAllowWhileIdle: true, uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime);
+}
+
+Future<void> showScheduledNotificationNow(status, difference) async {
 
   await _configureLocalTimeZone();
 
@@ -121,4 +141,8 @@ Future<void> _configureLocalTimeZone() async {
   tz.initializeTimeZones();
   final String timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
   tz.setLocalLocation(tz.getLocation(timeZoneName));
+}
+
+Future<void> cancelOngoingNotification() async {
+  await flutterLocalNotificationsPlugin.cancel(0);
 }

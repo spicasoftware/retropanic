@@ -26,7 +26,21 @@ class License extends StatelessWidget{
           Expanded(
             flex: 8,
             child: Text(
-              'He is Risen!',
+              'Licensed under the GNU General Public License:'
+                '\nRetroPanic, a personal development application'
+                '\nCopyright (C) 2021 Spica Labs\n'
+
+                '\nThis program is free software: you can redistribute it and/or modify'
+                ' it under the terms of the GNU General Public License as published by'
+                ' the Free Software Foundation, version 3 of the License.\n'
+
+                '\nThis program is distributed in the hope that it will be useful,'
+                ' but WITHOUT ANY WARRANTY; without even the implied warranty of'
+                ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the'
+                ' GNU General Public License for more details.\n'
+
+                '\nYou should have received a copy of the GNU General Public License'
+                ' along with this program.  If not, see <https://www.gnu.org/licenses/>.',
               textAlign: TextAlign.left,
               style: TextStyle(
                 color: _textColor,

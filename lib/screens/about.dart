@@ -102,17 +102,6 @@ class About extends StatelessWidget{
                 }
               )
             ),
-            Expanded(
-              flex: 1,
-              child: InkWell(
-                child: Text(
-                  "Blue'eyes",
-                  style: TextStyle(
-                      color: _textColor
-                  )
-                ),
-              )
-            ),
             Spacer(),
             Expanded(
               flex: 4,

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:retropanic/main.dart';
 import 'package:swipe_gesture_recognizer/swipe_gesture_recognizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:workmanager/workmanager.dart';
@@ -44,11 +43,9 @@ class _MainUIState extends State<MainUI> {
 
     ffiInit();
 
-    if (notificationToggle) {
-      Workmanager.registerPeriodicTask(
-          "1", "Retropanic ongoing notification",
-          frequency: Duration(minutes: 15));
-    }
+    Workmanager.registerPeriodicTask(
+        "1", "Retropanic ongoing notification",
+        frequency: Duration(minutes: 15));
 
     setState(() {
       _timer = Timer.periodic(Duration(seconds: 1), (Timer t) {

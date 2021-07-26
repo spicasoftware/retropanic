@@ -38,7 +38,7 @@ class _SettingsState extends State<Settings>{
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Notifications: ' + notificationStatus(notificationToggle), style: TextStyle(
+              'Persistent Notification: ' + notificationStatus(notificationToggle), style: TextStyle(
                 color: _textColor
               )
             ),
@@ -46,7 +46,6 @@ class _SettingsState extends State<Settings>{
               value: notificationToggle,
               onChanged: (value) {
                 setState(() {
-                  print('Value: ' + value.toString());
                   notificationToggle = value;
                   save(value);
                 });
